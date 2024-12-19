@@ -9,7 +9,7 @@
 
     $: problemUrls = [...Array(268).keys()].map((key) => `images/problem/${key}.PNG`);
     $: charUrls = charName.flatMap((name) => charType.map((type) => `images/${name}/${type}.png`));
-    $: preloadImageUrls = [...problemUrls, ...charUrls];
+    $: preloadImageUrls = ["images/band.png", ...charUrls, ...problemUrls];
 
     const resetData = async () => {
         localStorage.clear();
