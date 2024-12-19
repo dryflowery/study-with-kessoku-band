@@ -7,8 +7,8 @@
     const charName = ['kita', 'ryo', 'bocchi', 'nijika'];
     const charType = ['home', 'normal', 'correct', 'incorrect'];
 
-    $: problemUrls = [...Array(268).keys()].map((key) => `images/problem/${key}.PNG`);
     $: charUrls = charName.flatMap((name) => charType.map((type) => `images/${name}/${type}.png`));
+    $: problemUrls = [...Array(268).keys()].map((key) => `images/problem/${key}.PNG`);
     $: preloadImageUrls = ["images/band.png", ...charUrls, ...problemUrls];
 
     const resetData = async () => {
