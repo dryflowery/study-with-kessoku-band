@@ -7,7 +7,7 @@
     let problem = [];
     $: isCorrect = false;
     $: isIncorrect = false;
-    $: isCong = false;
+    $: isEnd = false;
     $: isNormal = true;
     $: curProblemNum = 0;
     $: imagePath = '';
@@ -87,14 +87,14 @@
             curProblemNum = curProblemNum + 1;
 
             isCorrect = isIncorrect = isNormal = false;
-            isCong = true;
+            isEnd = true;
             return;
         }
         else if(curProblemNum == $solveProblemCnt) {
             return;
         }
 
-        isCorrect = isIncorrect = isCong = false;
+        isCorrect = isIncorrect = isEnd = false;
         isNormal = true;
         curProblemNum = curProblemNum + 1;
         imagePath = `images/problem/${problem[curProblemNum]}.PNG`;
@@ -105,7 +105,7 @@
             return;
         }
 
-        isCorrect = isIncorrect = isCong = false;
+        isCorrect = isIncorrect = isEnd = false;
         isNormal = true;
         curProblemNum = curProblemNum - 1;
         imagePath = `images/problem/${problem[curProblemNum]}.PNG`;
@@ -212,7 +212,7 @@
                     {:else}
                         아, 아쉽다! 괜찮아, 다음엔 꼭 맞출 거야! 내가 응원할게!
                     {/if}   
-                {:else if isCong}
+                {:else if isEnd}
                     {#if $withKita}
                         우와! 전부 다 맞췄다니! 진짜 최고야~! 봇붕쿤 정말 멋지다, 나도 배워야겠어!
                     {:else if $withRyo}
@@ -236,7 +236,7 @@
                     {:else}
                         <img alt="" src="images/nijika/normal.png">
                     {/if}
-                {:else if isCorrect || isCong}
+                {:else if isCorrect || isEnd}
                     {#if $withKita}
                         <img alt="" src="images/kita/correct.png">
                     {:else if $withRyo}

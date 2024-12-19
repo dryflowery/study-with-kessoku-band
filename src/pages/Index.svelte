@@ -1,7 +1,7 @@
 <script>
     import { push } from "svelte-spa-router";
     import { problemCnt, solveProblemCnt, favorites, favoritesCnt, 
-             correctRate, answer, withKita, withRyo, withBocchi, withNijika } from "../lib/store";
+             correctRate, answer, withKita, withRyo, withBocchi, withNijika, loadCnt } from "../lib/store";
     import { onMount } from "svelte";
 
     const resetData = async () => {
@@ -89,8 +89,30 @@
         }
     };
 
+    const preloadImages = async () => {
+        if($loadCnt == 0) {
+            let tmpImg = new Image();
+
+            for(let i = 0; i < 268; i++) {
+                tmpImg.src = `images/problem/${i}.PNG`;
+            }
+
+            let imgName = ['kita', 'ryo', 'bocchi', 'nijika'];
+            let imgType = ['home', 'normal', 'correct', 'incorrect'];
+
+            for(let i = 0; i < imgName.length; i++) {
+                for(let j = 0; j < imgType.length; j++) {
+                    tmpImg.src = `images/${imgName[i]}/${imgType[j]}.png`;
+                }
+            }
+        }
+
+        $loadCnt++;
+    };
+
     onMount(() => {
         getData();
+        preloadImages();
     })
 </script>
   

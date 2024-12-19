@@ -12,3 +12,5 @@ export let withKita = writable(true);
 export let withRyo = writable(false);
 export let withBocchi = writable(false);
 export let withNijika = writable(false);
+
+export let loadCnt = writable(0);
