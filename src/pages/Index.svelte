@@ -1,8 +1,15 @@
 <script>
     import { push } from "svelte-spa-router";
     import { problemCnt, solveProblemCnt, favorites, favoritesCnt, 
-             correctRate, answer, withKita, withRyo, withBocchi, withNijika, loadCnt } from "../lib/store";
+             correctRate, answer, withKita, withRyo, withBocchi, withNijika} from "../lib/store";
     import { onMount } from "svelte";
+
+    const charName = ['kita', 'ryo', 'bocchi', 'nijika'];
+    const charType = ['home', 'normal', 'correct', 'incorrect'];
+
+    $: problemUrls = [...Array(268).keys()].map((key) => `images/problem/${key}.PNG`);
+    $: charUrls = charName.flatMap((name) => charType.map((type) => `images/${name}/${type}.png`));
+    $: preloadImageUrls = [...problemUrls, ...charUrls];
 
     const resetData = async () => {
         localStorage.clear();
@@ -89,33 +96,18 @@
         }
     };
 
-    const preloadImages = async () => {
-        if($loadCnt == 0) {
-            let tmpImg = new Image();
-
-            for(let i = 0; i < 268; i++) {
-                tmpImg.src = `images/problem/${i}.PNG`;
-            }
-
-            let imgName = ['kita', 'ryo', 'bocchi', 'nijika'];
-            let imgType = ['home', 'normal', 'correct', 'incorrect'];
-
-            for(let i = 0; i < imgName.length; i++) {
-                for(let j = 0; j < imgType.length; j++) {
-                    tmpImg.src = `images/${imgName[i]}/${imgType[j]}.png`;
-                }
-            }
-        }
-
-        $loadCnt++;
-    };
-
     onMount(() => {
         getData();
-        preloadImages();
     })
 </script>
   
+<!-- https://snippets.khromov.se/preloading-images-in-svelte/ -->
+<svelte:head>
+    {#each preloadImageUrls as image}
+        <link rel="preload" as="image" href={image} />
+    {/each}
+</svelte:head>
+
 <main>
     <div id="header">
         <div id="home-container" style="font-size: 2.6rem; color: black; font-weight: bold">
