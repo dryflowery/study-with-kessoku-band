@@ -272,7 +272,7 @@
         </div>
 
         <div id="right-btn-container">
-            {#if !$favorites[curProblemNum]}
+            {#if !$favorites[problem[curProblemNum]]}
                 <button style="width: 10vw;" on:click={addFavorites}>즐겨찾기 추가</button>
             {:else}
                 <button style="width: 10vw;" on:click={removeFavorites}>즐겨찾기 삭제</button>
